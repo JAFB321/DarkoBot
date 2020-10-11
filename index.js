@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const { Client } = require('discord.js');
+const config = require('./botconfig.json');
+
 const bot = new Client();
 
 bot.on('ready', () => {
@@ -19,7 +21,7 @@ bot.on('message', (message) => {
       message.reply(message.author.displayAvatarURL());
     }
 
-    
+
 
 });
 bot.login(process.env.BotToken);
