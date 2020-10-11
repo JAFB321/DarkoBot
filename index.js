@@ -7,6 +7,7 @@ const bot = new Client();
 
 bot.on('ready', () => {
   console.log(`Bot is ready as ${bot.user.tag}`);
+
 });
 
 bot.on('message', (message) => {
@@ -28,8 +29,6 @@ bot.on('message', (message) => {
       message.channel.send(`Oye ${name}, come verga pendejo`);
       
   }
-
-
 
 });
 bot.login(process.env.BotToken);
