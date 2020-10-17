@@ -13,4 +13,6 @@ exports.StartBot = (token) => {
     });
 
     AddModule(require('./messages'));
+    AddModule(require('./meet/meet'));
+    AddModule(require('./nasa/nasa'));
 }
