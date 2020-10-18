@@ -10,13 +10,12 @@ exports.addEvents = (bot) => {
 
         if (_prefix !== prefix) return;
 
-
         if (command === 'ahh') {
             message.channel.send('me falta el aire');
             message.channel.send('y el corazon tucum tucum tucum');
         }
 
-        if (command === 'avatar') {
+        else if (command === 'avatar') {
             
             if(menciones.size > 0){
                 menciones.each(user => {
@@ -30,7 +29,7 @@ exports.addEvents = (bot) => {
             
         }
 
-        if (command === 'hate') {
+        else if (command === 'hate') {
             let mention = message.mentions.users.first();
             let name = mention.username;
 

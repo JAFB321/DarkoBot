@@ -12,8 +12,8 @@ exports.addEvents = (bot) => {
         const [_prefix = '', command = '', ...params] = msg.split(' ');
 
         if (_prefix !== prefix) return;
-
-        if (command === 'meet') {
+        if (command !== 'meet') return;
+        
             const res = new MessageEmbed();
             let filter = '';
 
@@ -40,7 +40,7 @@ exports.addEvents = (bot) => {
             }
 
             message.channel.send(res || 'No existe la clase');
-        }
+        
 
     });
 
