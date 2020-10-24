@@ -25,8 +25,6 @@ const AutoCallLoop = async () => {
     if(URL){
         fetch(URL);        
     }
-    setTimeout(1500, () => {AutoCallLoop()})
+    setTimeout(() => {AutoCallLoop()}, 1500000);
 }
-
 AutoCallLoop();
-
