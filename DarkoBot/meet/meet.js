@@ -49,3 +49,5 @@ exports.addEvents = (bot) => {
 
 }
 
+const schema = require('./meet.json');
+exports.schema = schema;

@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
     res.send('DarkoBot Online');    
 });
 
+
 // Avoid heroku sleep
 const AutoCallLoop = async () => {
     const URL = process.env.HEROKU_URL;

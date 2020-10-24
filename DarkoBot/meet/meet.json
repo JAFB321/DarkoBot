@@ -1,4 +1,15 @@
 {
+    "ID": "meet",
+    "name": "Clases Meet",
+    "description":"Lista las clases proporcionando el link de Meet",
+    "help":[
+        {
+            "name":"[Filtro]",
+            "description":"Ingresa el nombre del profesor o la clase para filtrar",
+            "note":"Para listar todas las clases no escribas filtro"
+        }
+    ],
+
     "clases": [
         {
             "ID": "A2",

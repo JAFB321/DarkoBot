@@ -133,3 +133,5 @@ exports.addEvents = (bot) => {
 
 }
 
+const schema = require('./nasa.json');
+exports.help = schema;
