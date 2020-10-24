@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const colors = require('colors');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -17,4 +18,15 @@ app.listen(app.get('port'), () => {
 app.get('/', (req, res) => {
     res.send('DarkoBot Online');    
 });
+
+// Avoid heroku sleep
+const AutoCallLoop = async () => {
+    const URL = process.env.HEROKU_URL;
+    if(URL){
+        fetch(URL);        
+    }
+    setTimeout(1500, () => {AutoCallLoop()})
+}
+
+AutoCallLoop();
 
