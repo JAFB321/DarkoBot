@@ -1,4 +1,4 @@
-const { prefix } = require('./botconfig.json');
+const { prefix, GetParams } = require('./botconfig');
 
 exports.addEvents = (bot) => {
 
@@ -6,9 +6,10 @@ exports.addEvents = (bot) => {
 
         const msg = message.content;
         const menciones = message.mentions.users;
-        const [_prefix = '', command = '', ...params] = msg.split(' ');
 
-        if (_prefix !== prefix) return;
+        const { _prefix, command, params, validCommand } = GetParams(msg);
+
+        if(!validCommand) return;
 
         if (command === 'ahh') {
             message.channel.send('me falta el aire');
@@ -16,17 +17,17 @@ exports.addEvents = (bot) => {
         }
 
         else if (command === 'avatar') {
-            
-            if(menciones.size > 0){
+
+            if (menciones.size > 0) {
                 menciones.each(user => {
                     message.channel.send(user.displayAvatarURL());
-                });                
+                });
             }
-            else{
+            else {
                 message.channel.send(message.author.displayAvatarURL());
             }
 
-            
+
         }
 
         else if (command === 'hate') {

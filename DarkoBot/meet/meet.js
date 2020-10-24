@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-const { prefix } = require('../botconfig.json');
+const { prefix, GetParams } = require('../botconfig');
 const { clases } = require('./meet.json');
 
 exports.addEvents = (bot) => {
@@ -9,10 +9,9 @@ exports.addEvents = (bot) => {
 
         const msg = message.content;
         const menciones = message.mentions.users;
-        const [_prefix = '', command = '', ...params] = msg.split(' ');
-
-        if (_prefix !== prefix) return;
-        if (command !== 'meet') return;
+        const { _prefix, command, params, validCommand } = GetParams(msg);
+        
+        if (!validCommand || command !== 'meet') return;
         
             const res = new MessageEmbed();
             let filter = '';
@@ -32,10 +31,14 @@ exports.addEvents = (bot) => {
                     }
                 });
             }
-            else if (params.length == 0) {
+            else if (params.length === 0 || true) {
+                res.setTitle('Todas las clases');
+                res.description = '';        
+                res.setColor('#32a852');
+
                 clases.forEach((clase) => {
                     let { ID, nombre, profe, link } = clase;
-                    res += `${nombre}: ${link}\n`;
+                    res.description += `${nombre}: ${link}\n`;
                 });
             }
 

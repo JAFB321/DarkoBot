@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const schedule = require('node-schedule');
 
-const { prefix } = require('../botconfig.json');
+const { prefix, GetParams } = require('../botconfig');
 const { DailyImage, RandomDayImage } = require('./NasaAPI');
 
 // Auto Daily Images Variables
@@ -15,11 +15,10 @@ exports.addEvents = (bot) => {
 
         const msg = message.content;
         const menciones = message.mentions.users;
-        const [_prefix = '', command = '', ...params] = msg.split(' ');
-        const txtparams = params.toString().replace(',', '');
 
-        if (_prefix !== prefix) return;
-        if (command !== 'nasa') return;
+        const { _prefix, command, params, validCommand } = GetParams(msg);
+        
+        if (!validCommand || command !== 'nasa') return;
 
         let res;
         if (params[0] === 'daily') {
@@ -53,51 +52,51 @@ exports.addEvents = (bot) => {
             res = new MessageEmbed();
             const hora = 19;
 
-            if(params[1] === 'init'){    
+            if (params[1] === 'init') {
                 // const { Client } = require('discord.js'); 
                 // const bot1 = new Client().channels.res;.
                 if (!DailyInitialized) {
                     const channel = await bot.channels.fetch('763634332765388811');
-    
+
                     if (channel) {
-    
+
                         const sendDaily = async () => {
                             let data = await DailyImage();
                             const dailymsg = new MessageEmbed();
-    
+
                             const { title, url, hdurl, explanation, date } = data;
-    
+
                             if (url) {
                                 dailymsg.title = title;
                                 dailymsg.setImage(url);
                                 dailymsg.description = explanation + "\n";
                                 dailymsg.description += `\nImagen HD: ${hdurl}`;
-    
+
                                 message.channel.send(dailymsg || 'Comando invalido o no hay contenido');
-    
+
                             }
                             else {
-                                if (DailyAttemps < (24-hora)) {
+                                if (DailyAttemps < (24 - hora)) {
                                     setTimeout(sendDaily(), 3600000);
                                     DailyAttemps++;
                                 }
                             }
                         }
-    
+
                         const rule = new schedule.RecurrenceRule();
                         rule.hour = hora;
-    
+
                         DailyJob = schedule.scheduleJob(rule, () => {
                             sendDaily();
                             DailyAttemps = 0;
                         });
                     }
-    
+
                     DailyInitialized = true;
                     res.title = "Imagen del dia de la NASA";
                     res.description = "Se ha configurado correctamente\n";
                     res.description += 'Se enviara una imagen cada dia a las 8pm';
-                    res.setColor('#3ad692');   
+                    res.setColor('#3ad692');
                 }
                 else {
                     res.title = "Imagen del dia de la NASA";
@@ -107,17 +106,17 @@ exports.addEvents = (bot) => {
                 }
 
             }
-            else if(params[1] === 'cancel'){
-                if(DailyJob){
+            else if (params[1] === 'cancel') {
+                if (DailyJob) {
                     DailyJob.cancel();
                     DailyInitialized = false;
 
                     res.title = "Imagen del dia de la NASA";
                     res.description = "Se han cancelado las imagenes diarias\n";
                     res.description += 'Para volverlo a incializar ejecute: nasa auto init';
-                    res.setColor('#3ad692');                    
+                    res.setColor('#3ad692');
                 }
-                else{
+                else {
                     res.title = "Imagen del dia de la NASA";
                     res.description = "ERROR: El proceso no se ha configurado\n";
                     res.description += 'Para volverlo a incializar ejecute: nasa auto init';
