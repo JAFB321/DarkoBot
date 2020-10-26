@@ -1,7 +1,7 @@
 # DarkoBot
 
 This Hobby project uses the [discord.js](https://discord.js.org/) module for initialize, login and manage a Discord Bot.
-The content of the bot functionalities is made for a personal discord server (Greetings for my friends Molombi, Izak Darko and Jospabcor <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="15px">
+The content of the bot functionalities is made for a personal discord server (Greetings to my friends Molombi, Izak Darko and Jospabcor <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="15px">
  ).
  
  ## 1.- Create a Bot on Discord and get its credentials
