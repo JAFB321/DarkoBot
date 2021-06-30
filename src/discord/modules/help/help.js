@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { prefix, GetParams } = require('../botconfig');
+const { prefix, GetParams } = require('../../botconfig');
 
 let help_schemas = [];
 

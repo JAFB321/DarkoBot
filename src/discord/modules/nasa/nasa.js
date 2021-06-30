@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const schedule = require('node-schedule');
 
-const { prefix, GetParams } = require('../botconfig');
+const { prefix, GetParams } = require('../../botconfig');
 const { DailyImage, RandomDayImage } = require('./NasaAPI');
 
 // Auto Daily Images Variables
