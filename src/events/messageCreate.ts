@@ -1,4 +1,5 @@
-import {  Events, Message } from "discord.js";
+import { Events, Message } from "discord.js";
+import { BOT_PREFIX } from "../config";
 
 export default {
     type: Events.MessageCreate,
@@ -8,5 +9,5 @@ export default {
 
 async function execute(message: Message) {
     console.log(message.content);
-    if(message.content.startsWith('darko')) return message.reply('Hola soy Darkobot');
+    if(message.content.startsWith(BOT_PREFIX)) return message.reply('Hola soy Darkobot');
 }

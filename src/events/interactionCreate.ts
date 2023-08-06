@@ -8,8 +8,6 @@ export default {
 }
 
 async function execute(interaction: Interaction) {
-	console.log(interaction);
-	
     if (!interaction.isChatInputCommand()) return;
 	
 	const { commands, cooldowns } = interaction.client as DiscordClient
@@ -28,7 +26,6 @@ async function execute(interaction: Interaction) {
 		const expirationTime = timestamps.get(interaction.user.id) + cooldownDuration;
 
 		if(expirationTime > Date.now()){
-			const expiredTimestamp = Math.round(expirationTime / 1000);
 			return interaction.reply({ content: `El comando \`${command.data.name}\` tiene ${cooldownDuration/1000} segundos de cooldown culero aguantame a que agarre aire.`, ephemeral: true });
 		}
 	}
