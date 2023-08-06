@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node dist/app.js"
+    "start": "npm run tsc && node dist/app.js",
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "deploy-commands": "npm run tsc && node dist/scripts/deploy-commands.js",
+    "tsc": "rm -rf dist/ && tsc"
   },
   "repository": {
     "type": "git",
