@@ -1,33 +1,35 @@
-import "colors";
-import env from "dotenv";
-import express from "express";
-import fetch from "node-fetch";
-env.config();
+import type { DiscordClient } from "./types/discord";
+import { BOT_TOKEN } from "./config";
+import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { commands } from "./commands";
+import { events } from "./events";
 
-// Discord Bot
-import DarkoBot from "./discord/DarkoBot";
-DarkoBot.init(() => console.log("DarkoBot Online"));
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+  ],
+}) as DiscordClient;
 
-// Express Server
-const app = express();
+// Set up commands
+client.commands = new Collection();
+client.cooldowns = new Collection();
 
-app.set("port", process.env.PORT || 3000);
-app.listen(app.get("port"), () => {
-	console.log(`Server on port ${app.get("port")}`.blue);
-});
-
-app.get("/", (req, res) => {
-	res.send("DarkoBot Online");
-});
-
-// Avoid heroku sleep
-async function AutoCallLoop() {
-	const URL = process.env.APP_URL;
-	if (URL) {
-		fetch(URL);
-	}
-	setTimeout(() => {
-		AutoCallLoop();
-	}, 1500000);
+for (const command of commands) {
+  client.commands.set(command.data.name, command);
+  client.cooldowns.set(command.data.name, new Collection());
 }
-// AutoCallLoop();
+
+// Set up events
+for (const event of events) {
+  if (event.once) {
+    client.once(event.type, (...args) => event.execute(...args));
+  } else {
+    client.on(event.type, (...args) => event.execute(...args));
+  }
+}
+
+// Log in to Discord
+client.login(BOT_TOKEN);
